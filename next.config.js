@@ -10,8 +10,10 @@ const nextConfig = {
   },
 
   experimental: {
+    newNextLinkBehavior: true,
     images: {
       unoptimized: true,
+      allowFutureImage: true,
     },
   }
   
