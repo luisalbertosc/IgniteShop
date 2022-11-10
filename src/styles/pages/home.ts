@@ -8,12 +8,13 @@ export const HomeContainer = styled('main', {
   minHeight: 656
 })
 
-export const Product = styled('a', {
+export const Product = styled('div', {
   background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
   borderRadius: 8,
   cursor: 'pointer',
   position: 'relative',
   overflow: 'hidden',
+ 
 
   display: 'flex',
   alignItems: 'center',
@@ -29,6 +30,7 @@ export const Product = styled('a', {
     left: '0.25rem',
     right: '0.25rem',
     padding: '2rem',
+    cursor: 'default',
 
     borderRadius: 6,
 
@@ -41,6 +43,12 @@ export const Product = styled('a', {
     transform: 'translateY(110%)',
     opacity: 0,
     transition: 'all 0.2s ease-in-out',
+
+    div:{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0.5rem',
+    },
 
     strong: {
       fontSize: '$lg',
@@ -60,4 +68,19 @@ export const Product = styled('a', {
       opacity: 1
     }
   }
+})
+
+export const ButtonAddCart = styled('div',{
+  width: 56,
+  height: 56,
+  background: '$green500',
+  color: '#FFFFFF',
+  cursor: 'pointer',
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: 6,
+
+
 })

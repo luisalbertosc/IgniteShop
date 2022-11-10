@@ -1,6 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from "next"
-import axios from "axios";
-import { useState } from "react";
+
 import Image from "next/image";
 import Stripe from "stripe";
 import { stripe } from "../../lib/stripe"; 
@@ -8,6 +7,9 @@ import { ImageContainer, ProductContainer, ProductDetails } from "../../styles/p
 import { formatter } from "../../utils/formatter";
 import Head from "next/head";
 
+import {  useContext } from 'react';
+
+import { PurchaseContext } from '../../context/context';
 
 interface ProductProps {
   product: {
@@ -21,25 +23,30 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
 
-  async function handleBuyButton() {
-    try {
-      setIsCreatingCheckoutSession(true);
+  const { addToCart } = useContext(PurchaseContext);
 
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
+  const handleAddToCart = () => {
+    addToCart({ ...product, quantity: 1 });
+  };
 
-      const { checkoutUrl } = response.data;
+  // async function handleBuyButton() {
+  //   try {
+  //     setIsCreatingCheckoutSession(true);
 
-      window.location.href = checkoutUrl;
-    } catch (err) {
-      setIsCreatingCheckoutSession(false);
+  //     const response = await axios.post('/api/checkout', {
+  //       priceId: product.defaultPriceId,
+  //     })
 
-      alert('Falha ao redirecionar ao checkout!')
-    }
-  }
+  //     const { checkoutUrl } = response.data;
+
+  //     window.location.href = checkoutUrl;
+  //   } catch (err) {
+  //     setIsCreatingCheckoutSession(false);
+
+  //     alert('Falha ao redirecionar ao checkout!')
+  //   }
+  // }
   
   return (
     <>
@@ -58,8 +65,8 @@ export default function Product({ product }: ProductProps) {
 
         <p>{product.description}</p>
 
-        <button disabled={isCreatingCheckoutSession} onClick={handleBuyButton}>
-          Comprar agora
+        <button onClick={handleAddToCart}>
+          Colocar na sacola
         </button>
       </ProductDetails>
     </ProductContainer>
