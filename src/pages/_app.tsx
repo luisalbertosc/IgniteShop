@@ -10,16 +10,12 @@ import Link from "next/link"
 import { PurchaseProvider } from '../context/context'
 
 
-
-
-
 globalStyles()
 
-
 export default function App({ Component, pageProps }: AppProps) {
+ 
   const [showDrawer, setShowDrawer] = useState(false);
-
-  function handleCloseDrawer()  {
+  function handleCloseDrawer() {
     setShowDrawer(false);
   };
 
@@ -27,29 +23,26 @@ export default function App({ Component, pageProps }: AppProps) {
     setShowDrawer(true);
   };
 
- 
-
   return (
     <PurchaseProvider>
-    <Container>
-      <Header>
-      <Link href={`/`}>
-        <Image src={logoImg} alt="teste" />
-        </Link>
-        
-        <Button onClick={handleOpenDrawer}>
-          <div>
-          <Handbag size={24} weight="bold" />
-          </div>
-        
-        </Button>
-       
-        <Drawer show={showDrawer} onHandleCloseDrawer={handleCloseDrawer}/>
-       
-      </Header>
+      <Container>
+        <Header>
+          <Link href={`/`}>
+            <Image src={logoImg} alt="teste" />
+          </Link>
 
-      <Component {...pageProps} />
-    </Container>
+          <Button onClick={handleOpenDrawer}>
+            <div>
+              <Handbag size={24} weight="bold" />
+              {/* {cartSpan !== null && <span>{cartSpan}</span>} */}
+            </div>
+          </Button>
+          
+          <Drawer show={showDrawer} onHandleCloseDrawer={handleCloseDrawer} />
+        </Header>
+
+        <Component {...pageProps} />
+      </Container>
     </PurchaseProvider>
   )
 }

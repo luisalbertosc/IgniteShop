@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useEffect, useReducer, useState } from 'react';
 
 import axios from 'axios';
-import Product from '../pages/product/[id]';
 
 type ProductType = {
   imageUrl: string;
@@ -139,9 +138,10 @@ export const PurchaseProvider = ({
     } catch (error) {
       // Conectar com ferramenta de observabilidade (Datadog / Sentry)
       
-      alert(error.error);
+      alert('rota não encontrada');
     }
   };
+
 
   return (
     <PurchaseContext.Provider

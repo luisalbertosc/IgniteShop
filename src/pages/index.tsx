@@ -1,5 +1,5 @@
-
 import { GetStaticProps } from "next"
+
 import { stripe } from "../lib/stripe"
 import Link from "next/link"
 
@@ -11,7 +11,6 @@ import Head from 'next/head'
 import Image from "next/image"
 import { ButtonAddCart, HomeContainer, Product } from "../styles/pages/home"
 import { useKeenSlider } from 'keen-slider/react'
-
 
 import 'keen-slider/keen-slider.min.css'
 
@@ -25,27 +24,26 @@ interface HomeProps {
     name: string
     imageUrl: string
     price: string
+    description: string
+    defaultPriceId: string
   }[]
 }
 
-interface ProductProps {
-  product: {
-    id: string
-    name: string
-    imageUrl: string
-    price: string
-    description: string
-    defaultPriceId: string
-  }
+interface Product {
+  id: string
+  name: string
+  imageUrl: string
+  price: string
+  defaultPriceId: string
 }
 
-export default function Home({ products }: HomeProps, { product }: ProductProps) {
+export default function Home({ products }: HomeProps) {
 
   const { addToCart } = useContext(PurchaseContext);
 
-    const handleAddToCart = () => {
-      addToCart({ ...product, quantity: 1 });
-    };
+  const handleAddToCart = (product: Product) => {
+    addToCart({ ...product, quantity: 1 });
+  };
   
   const [sliderRef] = useKeenSlider({
     slides: {
@@ -72,7 +70,7 @@ export default function Home({ products }: HomeProps, { product }: ProductProps)
                     <span>{product.price}</span>
                   </div>
                  
-                 <ButtonAddCart onClick={handleAddToCart}>
+                 <ButtonAddCart onClick={() => handleAddToCart(product)}>
                     <Handbag size={32} weight="bold" />
                  </ButtonAddCart>
                 
@@ -101,6 +99,8 @@ export const getStaticProps: GetStaticProps = async () => {
       name: product.name,
       imageUrl: product.images[0],
       price: formatter.format(price.unit_amount! / 100),
+      description: product.description,
+      defaultPriceId: price.id
     }
   })
 
